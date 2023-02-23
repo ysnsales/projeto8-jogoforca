@@ -21,6 +21,12 @@ img {
     border-width: 0px;
 }
 
+.Jogo p {
+    margin-top: 278px;
+    font-weight: 700;
+    font-size: 50px;
+}
+
 .Letras {
     width: 676px;
     margin: 0 auto;
@@ -34,3 +40,4 @@ img {
     border: 1px solid #7AA7C7;
     border-radius: 3px;
 }
+
