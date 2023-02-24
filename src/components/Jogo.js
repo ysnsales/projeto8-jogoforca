@@ -3,11 +3,11 @@ export default function Jogo(props){
     
     return (
         <div className="Jogo">
-        <img src="assets/forca0.png" alt="forca0" />
+        <img src={props.imagensErro} alt={props.imagensErro} />
 
         <div>
         <button onClick={props.EscolherPalavra}>Escolher Palavra</button>
-        <p>{(props.palavraMostrada)}</p>
+        <p style={{color:props.cor}}>{(props.palavraMostrada) }</p>
         </div>
         </div>
     )
