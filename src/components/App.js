@@ -25,6 +25,11 @@ export default function App() {
         setPalavraMostrada((novaPalavra.split("")).map(() => "_ "));
         setdisabled(false)
         
+        setImagensErro(imagens[0])
+        setContadorErro(0)
+        setLetrasClicadas([])
+        setcor("black")
+
     }
 
 
