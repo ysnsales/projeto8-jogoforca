@@ -1,6 +1,7 @@
 import Jogo from "./Jogo"
 import Letras from "./Letras"
 import Palavras from "../palavras"
+import Chute from "./Chute"
 import { useRef, useState } from "react"
 
 
@@ -16,35 +17,38 @@ export default function App() {
     const [letrasClicadas, setLetrasClicadas] = useState([])
     const [cor, setcor] = useState("black")
     const [disabled, setdisabled] = useState(true)
+    const [chute, setChute] = useState("");
     
-
-    function EscolherPalavra (){
+    function EscolherPalavra() {
         const randomIndex = Math.floor(Math.random() * Palavras.length);
         let novaPalavra = (Palavras[randomIndex]);
         setPalavraEscolhida(novaPalavra);
-        setPalavraMostrada((novaPalavra.split("")).map(() => "_ "));
+        setPalavraMostrada((novaPalavra.split("")).map(() => " _ "));
         setdisabled(false)
-        
+
         setImagensErro(imagens[0])
         setContadorErro(0)
         setLetrasClicadas([])
         setcor("black")
+        setChute("")
+        document.querySelector('.input').value='';
 
     }
 
 
-    function ConfereLetra(letra){
+    function ConfereLetra(letra) {
         console.log(palavraEscolhida)
         setLetrasClicadas([...letrasClicadas, letra])
 
-        if (palavraEscolhida.includes(letra)){
-            for (let i=0; i<palavraEscolhida.length; i++) {
-                if (palavraEscolhida[i]===letra){
+        if (palavraEscolhida.includes(letra)) {
+            for (let i = 0; i < palavraEscolhida.length; i++) {
+                if (palavraEscolhida[i] === letra) {
                     setPalavraMostrada(palavraMostrada.slice(palavraMostrada[i] = letra));
-        }}
+                }
+            }
 
-        }else {
-            setImagensErro(imagens[contadorErro+1])
+        } else {
+            setImagensErro(imagens[contadorErro + 1])
             setContadorErro(contadorErro + 1);
         }
 
@@ -52,32 +56,55 @@ export default function App() {
 
     }
 
-    function FimDeJogo(){
-            if (contadorErro===5){
-                setcor("red")
-                setPalavraMostrada(palavraEscolhida)
-                setdisabled(true)
-            }else if (palavraMostrada.join('')===palavraEscolhida){
-                setcor("green");
-                setPalavraMostrada(palavraEscolhida);
-                setdisabled(true)
-            }
+    function FimDeJogo() {
+        if (contadorErro === 5) {
+            setcor("red")
+            setPalavraMostrada(palavraEscolhida)
+            setdisabled(true)
+        } else if (palavraMostrada.join('') === palavraEscolhida) {
+            setcor("green");
+            setPalavraMostrada(palavraEscolhida);
+            setdisabled(true)
+        }
 
+    }
+
+    function Chutar(chute) {
+        setChute(chute.target.value);
+
+    }
+
+    function EnviarChute () {
+        if (chute===palavraEscolhida) {
+            setcor("green");
+            setPalavraMostrada(palavraEscolhida);
+            setdisabled(true)
+        }else {
+            setImagensErro(imagens[6])
+            setcor("red")
+            setPalavraMostrada(palavraEscolhida)
+            setdisabled(true)
+
+        }
+        
     }
 
     return (
         <>
             <Jogo EscolherPalavra={EscolherPalavra}
-             palavraMostrada={palavraMostrada} 
-             imagensErro={imagensErro}
-             cor={cor}/>
+                palavraMostrada={palavraMostrada}
+                imagensErro={imagensErro}
+                cor={cor} />
 
-            <Letras ConfereLetra={ConfereLetra} 
-            alfabeto={alfabeto}
-            letrasClicadas={letrasClicadas}
-            disabled={disabled}
-            />
-            
+            <Letras ConfereLetra={ConfereLetra}
+                alfabeto={alfabeto}
+                letrasClicadas={letrasClicadas}
+                disabled={disabled} />
+
+            <Chute Chutar={Chutar}
+                EnviarChute={EnviarChute}
+                disabled={disabled}/>
+
         </>
-            )
+    )
 }

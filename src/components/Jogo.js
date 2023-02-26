@@ -1,6 +1,4 @@
-
-export default function Jogo(props){
-    
+export default function Jogo(props){    
     return (
         <div className="Jogo">
         <img data-test="game-image" src={props.imagensErro} alt={props.imagensErro} />
