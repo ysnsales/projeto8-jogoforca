@@ -19,12 +19,24 @@ img {
     color: white;
     border-radius: 8px;
     border-width: 0px;
+
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
 }
 
 .Jogo p {
     margin-top: 278px;
     font-weight: 700;
     font-size: 50px;
+
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 68px;
 }
 
 .Letras {
@@ -36,8 +48,20 @@ img {
     height: 40px;
     margin: 6px 6px;
 
-    background: #9FAAB5;
+    background:#E1ECF4;
+    color: #39739D;
     border: 1px solid #7AA7C7;
     border-radius: 3px;
+
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.Letras button:disabled {
+    background: #9FAAB5;
+    color:#798A9F;
 }
 
