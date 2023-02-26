@@ -13,32 +13,24 @@ export default function App() {
     const [palavraMostrada, setPalavraMostrada] = useState("");
     const [imagensErro, setImagensErro] = useState(imagens[0]);
     const [contadorErro, setContadorErro] = useState(0)
-
     const [letrasClicadas, setLetrasClicadas] = useState([])
-
     const [cor, setcor] = useState("black")
+    const [disabled, setdisabled] = useState(true)
     
 
     function EscolherPalavra (){
-        
         const randomIndex = Math.floor(Math.random() * Palavras.length);
         let novaPalavra = (Palavras[randomIndex]);
         setPalavraEscolhida(novaPalavra);
         setPalavraMostrada((novaPalavra.split("")).map(() => "_ "));
+        setdisabled(false)
         
     }
 
-    console.log(palavraEscolhida)
-    console.log(palavraMostrada)
 
     function ConfereLetra(letra){
-        console.log(letra)
-        
+        console.log(palavraEscolhida)
         setLetrasClicadas([...letrasClicadas, letra])
-        console.log(letrasClicadas)
-        console.log(letrasClicadas.length)
-        console.log(palavraEscolhida.length)
-        console.log(palavraMostrada.join(''))
 
         if (palavraEscolhida.includes(letra)){
             for (let i=0; i<palavraEscolhida.length; i++) {
@@ -47,9 +39,8 @@ export default function App() {
         }}
 
         }else {
-            setContadorErro(contadorErro + 1);
-            console.log("contador= " + contadorErro)
             setImagensErro(imagens[contadorErro+1])
+            setContadorErro(contadorErro + 1);
         }
 
         FimDeJogo();
@@ -60,9 +51,11 @@ export default function App() {
             if (contadorErro===5){
                 setcor("red")
                 setPalavraMostrada(palavraEscolhida)
+                setdisabled(true)
             }else if (palavraMostrada.join('')===palavraEscolhida){
                 setcor("green");
                 setPalavraMostrada(palavraEscolhida);
+                setdisabled(true)
             }
 
     }
@@ -77,6 +70,7 @@ export default function App() {
             <Letras ConfereLetra={ConfereLetra} 
             alfabeto={alfabeto}
             letrasClicadas={letrasClicadas}
+            disabled={disabled}
             />
             
         </>

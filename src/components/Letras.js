@@ -3,7 +3,7 @@ export default function Letras(props) {
         <div className="Letras">
             {props.alfabeto.map((letra) => <button data-test="letter" 
             key={letra} 
-            disabled={props.letrasClicadas.includes(letra)}
+            disabled={props.disabled || (props.letrasClicadas.includes(letra))}
             onClick={() => props.ConfereLetra(letra)}
             >{letra.toUpperCase()}
             </button>)}
