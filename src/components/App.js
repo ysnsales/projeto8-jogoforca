@@ -18,6 +18,8 @@ export default function App() {
     const [cor, setcor] = useState("black")
     const [disabled, setdisabled] = useState(true)
     const [chute, setChute] = useState("");
+
+    let palavraNormalizada = palavraEscolhida.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     
     function EscolherPalavra() {
         const randomIndex = Math.floor(Math.random() * Palavras.length);
@@ -32,18 +34,19 @@ export default function App() {
         setcor("black")
         setChute("")
         document.querySelector('.input').value='';
-
     }
 
 
     function ConfereLetra(letra) {
         console.log(palavraEscolhida)
         setLetrasClicadas([...letrasClicadas, letra])
+      //  let palavraNormalizada = palavraEscolhida.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        console.log(palavraNormalizada)
 
-        if (palavraEscolhida.includes(letra)) {
+        if (palavraNormalizada.includes(letra)) {
             for (let i = 0; i < palavraEscolhida.length; i++) {
-                if (palavraEscolhida[i] === letra) {
-                    setPalavraMostrada(palavraMostrada.slice(palavraMostrada[i] = letra));
+                if (palavraNormalizada[i] === letra) {
+                    setPalavraMostrada(palavraMostrada.slice(palavraMostrada[i] = palavraEscolhida[i]));
                 }
             }
 
@@ -75,7 +78,8 @@ export default function App() {
     }
 
     function EnviarChute () {
-        if (chute===palavraEscolhida) {
+        let chuteNormalizado = chute.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        if (chuteNormalizado===palavraNormalizada) {
             setcor("green");
             setPalavraMostrada(palavraEscolhida);
             setdisabled(true)
