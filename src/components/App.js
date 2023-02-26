@@ -4,8 +4,6 @@ import Palavras from "../palavras"
 import { useRef, useState } from "react"
 
 
-let contadorErros = 0;
-
 export default function App() {
 
     const alfabeto = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
@@ -14,10 +12,12 @@ export default function App() {
     const [palavraEscolhida, setPalavraEscolhida] = useState("");
     const [palavraMostrada, setPalavraMostrada] = useState("");
     const [imagensErro, setImagensErro] = useState(imagens[0]);
+    const [contadorErro, setContadorErro] = useState(0)
+
+    const [letrasClicadas, setLetrasClicadas] = useState([])
 
     const [cor, setcor] = useState("black")
-    //const [isDisabled, setIsDisabled] = useState(false);
-
+    
 
     function EscolherPalavra (){
         
@@ -33,25 +33,37 @@ export default function App() {
 
     function ConfereLetra(letra){
         console.log(letra)
-        //setIsDisabled(true);
+        
+        setLetrasClicadas([...letrasClicadas, letra])
+        console.log(letrasClicadas)
+        console.log(letrasClicadas.length)
+        console.log(palavraEscolhida.length)
+        console.log(palavraMostrada.join(''))
 
         if (palavraEscolhida.includes(letra)){
-            let indiceLetra  = palavraEscolhida.indexOf(letra);
-            setPalavraMostrada(palavraMostrada.slice(palavraMostrada[indiceLetra] = letra));
-            
+            for (let i=0; i<palavraEscolhida.length; i++) {
+                if (palavraEscolhida[i]===letra){
+                    setPalavraMostrada(palavraMostrada.slice(palavraMostrada[i] = letra));
+        }}
 
         }else {
-            contadorErros = contadorErros + 1;
-            console.log("contador= " + contadorErros)
-
-            setImagensErro(imagens[contadorErros])
-
-            if (contadorErros===6){
-                setcor("red")
-                setPalavraMostrada(palavraEscolhida)
-            }
+            setContadorErro(contadorErro + 1);
+            console.log("contador= " + contadorErro)
+            setImagensErro(imagens[contadorErro+1])
         }
 
+        FimDeJogo();
+
+    }
+
+    function FimDeJogo(){
+            if (contadorErro===5){
+                setcor("red")
+                setPalavraMostrada(palavraEscolhida)
+            }else if (palavraMostrada.join('')===palavraEscolhida){
+                setcor("green");
+                setPalavraMostrada(palavraEscolhida);
+            }
 
     }
 
@@ -61,9 +73,10 @@ export default function App() {
              palavraMostrada={palavraMostrada} 
              imagensErro={imagensErro}
              cor={cor}/>
+
             <Letras ConfereLetra={ConfereLetra} 
             alfabeto={alfabeto}
-            //disabled={isDisabled}
+            letrasClicadas={letrasClicadas}
             />
             
         </>
