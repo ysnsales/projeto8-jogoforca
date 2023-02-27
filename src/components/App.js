@@ -2,8 +2,7 @@ import Jogo from "./Jogo"
 import Letras from "./Letras"
 import Palavras from "../palavras"
 import Chute from "./Chute"
-import { useRef, useState } from "react"
-
+import { useState } from "react"
 
 export default function App() {
 
@@ -20,7 +19,7 @@ export default function App() {
     const [chute, setChute] = useState("");
 
     let palavraNormalizada = palavraEscolhida.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    
+
     function EscolherPalavra() {
         const randomIndex = Math.floor(Math.random() * Palavras.length);
         let novaPalavra = (Palavras[randomIndex]);
@@ -34,33 +33,39 @@ export default function App() {
         setcor("black")
         setChute("")
         document.querySelector('.input').value='';
+        
     }
 
 
     function ConfereLetra(letra) {
-        console.log(palavraEscolhida)
         setLetrasClicadas([...letrasClicadas, letra])
-      //  let palavraNormalizada = palavraEscolhida.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-        console.log(palavraNormalizada)
-
         if (palavraNormalizada.includes(letra)) {
             for (let i = 0; i < palavraEscolhida.length; i++) {
                 if (palavraNormalizada[i] === letra) {
                     setPalavraMostrada(palavraMostrada.slice(palavraMostrada[i] = palavraEscolhida[i]));
                 }
             }
+            FimDeJogo();
 
         } else {
-            setImagensErro(imagens[contadorErro + 1])
-            setContadorErro(contadorErro + 1);
+            const contador = contadorErro + 1
+            setContadorErro(contador);
+            setImagensErro(imagens[contador])
+            console.log(contador)
+            FimDeJogo(contador);
         }
 
-        FimDeJogo();
+        console.log(palavraEscolhida)
+        console.log(letrasClicadas)
+        console.log(palavraMostrada)
+        
+
 
     }
 
-    function FimDeJogo() {
-        if (contadorErro === 5) {
+
+    function FimDeJogo(contador) {
+        if (contador === 6) {
             setcor("red")
             setPalavraMostrada(palavraEscolhida)
             setdisabled(true)
@@ -93,6 +98,7 @@ export default function App() {
         
     }
 
+    
     return (
         <>
             <Jogo EscolherPalavra={EscolherPalavra}
